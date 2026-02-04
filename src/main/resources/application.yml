@@ -1,1 +1,8 @@
-spring.application.name=ProductService
+spring:
+  application:
+    name: ProductService
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: ConfigServer
