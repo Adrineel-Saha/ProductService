@@ -1,4 +1,4 @@
-package com.cognizant.productservice;
+package com.cognizant.productservice.main;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
