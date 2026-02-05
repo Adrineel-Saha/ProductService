@@ -10,6 +10,14 @@ public class ProductDTO {
     @NotBlank(message="Product Name cannot be blank")
     private String name;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private String description;
 
     @Positive(message="Price should be positive")
@@ -48,5 +56,10 @@ public class ProductDTO {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "[ ProductId: " + id + " , ProductName: " + name + " , Description: " + description + " , Price: " + price + " , Stock: " + stock + " ]";
     }
 }
