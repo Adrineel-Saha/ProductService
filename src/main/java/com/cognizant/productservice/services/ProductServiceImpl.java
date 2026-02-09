@@ -9,9 +9,11 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
@@ -58,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
                 .map(product->modelMapper.map(product,ProductDTO.class)).toList();
 
         if(productDTOList.isEmpty()){
-            throw new ProductNameNotFoundException("Product not found with Name:" + name);
+            throw new ProductNameNotFoundException("Product not found with Name: " + name);
         }
 
         return productDTOList;

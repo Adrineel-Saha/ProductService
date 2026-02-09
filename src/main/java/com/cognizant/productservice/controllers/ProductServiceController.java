@@ -83,7 +83,7 @@ public class ProductServiceController {
         }
     }
 
-    @GetMapping("{id}")
+    @GetMapping("id/{id}")
     @Operation(
             summary="Get Product By Id REST API",
             description="Used to get a single product from the database"
@@ -110,7 +110,7 @@ public class ProductServiceController {
         }
     }
 
-    @GetMapping("{name}")
+    @GetMapping("name/{name}")
     @Operation(
             summary="Get Products By Name REST API",
             description="Used to get all products by name from the database"
