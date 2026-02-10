@@ -150,6 +150,10 @@ public class ProductServiceController {
             @ApiResponse(
                     responseCode = "404",
                     description="User Not Found"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description="Bad Request"
             )
     })
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable("id") Long id,@Valid @RequestBody ProductDTO productDTO){

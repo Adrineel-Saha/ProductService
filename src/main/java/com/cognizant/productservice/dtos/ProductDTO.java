@@ -20,6 +20,7 @@ public class ProductDTO {
     )
     private String name;
 
+    @NotBlank(message="Description cannot be blank")
     @Schema(
             description = "Description"
     )
