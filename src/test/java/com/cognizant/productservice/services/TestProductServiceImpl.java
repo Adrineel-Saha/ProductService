@@ -347,4 +347,143 @@ public class TestProductServiceImpl {
 
     }
 
+    @Test
+    public void testUpdateProductPositive(){
+        try{
+            ProductDTO productDTO=new ProductDTO();
+            productDTO.setName("Mechanical Keyboard");
+            productDTO.setDescription("RGB backlit mechanical keyboard with blue switches.");
+            productDTO.setPrice(5099);
+            productDTO.setStock(200);
+
+            Product product=new Product();
+            product.setId(1L);
+            product.setName("Mechanical Keyboard");
+            product.setDescription("RGB backlit mechanical keyboard with blue switches.");
+            product.setPrice(5099);
+            product.setStock(200);
+
+            Product savedproduct=new Product();
+            savedproduct.setId(1L);
+            savedproduct.setName("Wireless Mouse");
+            savedproduct.setDescription("Ergonomic 2.4GHz wireless mouse with adjustable DPI.");
+            savedproduct.setPrice(4099);
+            savedproduct.setStock(150);
+
+            ProductDTO savedproductDTO=new ProductDTO();
+            savedproductDTO.setId(1L);
+            savedproductDTO.setName("Wireless Mouse");
+            savedproductDTO.setDescription("Ergonomic 2.4GHz wireless mouse with adjustable DPI.");
+            savedproductDTO.setPrice(4099);
+            savedproductDTO.setStock(150);
+
+            when(productRepository.findById(any())).thenReturn(Optional.of(product));
+            when(productRepository.save(any(Product.class))).thenReturn(savedproduct);
+            when(modelMapper.map(any(Product.class),eq(ProductDTO.class))).thenReturn(savedproductDTO);
+
+            ProductDTO actualProductDTO=productServiceImpl.updateProduct(1L,productDTO);
+            assertNotNull(actualProductDTO);
+        } catch(Exception ex){
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    public void testUpdateProductNegativeWhenProductNameIsBlank(){
+        ProductDTO productDTO=new ProductDTO();
+        productDTO.setName("");
+        productDTO.setDescription("6-in-1 USB-b hub with HDMI, USB 3.0, SD/TF reader.");
+        productDTO.setPrice(3599);
+        productDTO.setStock(250);
+
+        Set<ConstraintViolation<ProductDTO>> violations = validator.validate(productDTO);
+
+        assertThat(violations)
+                .extracting(v -> v.getMessage())
+                .anyMatch(msg -> msg.contains("Product Name cannot be blank"));
+
+    }
+
+    @Test
+    public void testUpdateProductNegativeWhenDescriptionIsBlank(){
+        ProductDTO productDTO=new ProductDTO();
+        productDTO.setName("Wireless Mouse");
+        productDTO.setDescription("");
+        productDTO.setPrice(4599);
+        productDTO.setStock(350);
+
+        Set<ConstraintViolation<ProductDTO>> violations = validator.validate(productDTO);
+
+        assertThat(violations)
+                .extracting(v -> v.getMessage())
+                .anyMatch(msg -> msg.contains("Description cannot be blank"));
+
+    }
+
+    @Test
+    public void testUpdateProductNegativeWhenPriceIsNegative(){
+        ProductDTO productDTO=new ProductDTO();
+        productDTO.setName("Wireless Mouse");
+        productDTO.setDescription("Ergonomic 2.4GHz wireless mouse with adjustable DPI.");
+        productDTO.setPrice(-4599);
+        productDTO.setStock(350);
+
+        Set<ConstraintViolation<ProductDTO>> violations = validator.validate(productDTO);
+
+        assertThat(violations)
+                .extracting(v -> v.getMessage())
+                .anyMatch(msg -> msg.contains("Price should be positive"));
+
+    }
+
+    @Test
+    public void testUpdateProductNegativeWhenPriceIsZero(){
+        ProductDTO productDTO=new ProductDTO();
+        productDTO.setName("Wireless Mouse");
+        productDTO.setDescription("Ergonomic 2.4GHz wireless mouse with adjustable DPI.");
+        productDTO.setPrice(0);
+        productDTO.setStock(350);
+
+        Set<ConstraintViolation<ProductDTO>> violations = validator.validate(productDTO);
+
+        assertThat(violations)
+                .extracting(v -> v.getMessage())
+                .anyMatch(msg -> msg.contains("Price should be positive"));
+
+    }
+
+    @Test
+    public void testUpdateProductNegativeWhenStockIsNegative(){
+        ProductDTO productDTO=new ProductDTO();
+        productDTO.setName("Wireless Mouse");
+        productDTO.setDescription("Ergonomic 2.4GHz wireless mouse with adjustable DPI.");
+        productDTO.setPrice(4599);
+        productDTO.setStock(-350);
+
+        Set<ConstraintViolation<ProductDTO>> violations = validator.validate(productDTO);
+
+        assertThat(violations)
+                .extracting(v -> v.getMessage())
+                .anyMatch(msg -> msg.contains("Stock cannot less then 0"));
+
+    }
+
+    @Test
+    public void testUpdateProductNegativeWhenProductNotFound(){
+        try{
+            ProductDTO productDTO=new ProductDTO();
+            productDTO.setName("Mechanical Keyboard");
+            productDTO.setDescription("RGB backlit mechanical keyboard with blue switches.");
+            productDTO.setPrice(5099);
+            productDTO.setStock(200);
+
+            when(productRepository.findById(any())).thenReturn(Optional.empty());
+            ProductDTO actualProductDTO=productServiceImpl.updateProduct(1L,productDTO);
+        } catch(Exception ex){
+            assertThat(ex)
+                    .isInstanceOf(ResourceNotFoundException.class)
+                    .hasMessageContaining("Product not found with Id: 1");
+        }
+    }
+
 }

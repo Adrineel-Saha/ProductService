@@ -184,7 +184,7 @@ public class ProductServiceController {
                     description="Product Not Found"
             ),
     })
-    public ResponseEntity<String>  deleteUser(@PathVariable("id") Long id){
+    public ResponseEntity<String>  deleteProduct(@PathVariable("id") Long id){
         log.info("Deleting Product with Id: " + id);
         String result=productService.deleteProduct(id);
         if (result != null) {
