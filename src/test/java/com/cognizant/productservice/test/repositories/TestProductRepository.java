@@ -1,7 +1,8 @@
-package com.cognizant.productservice.repositories;
+package com.cognizant.productservice.test.repositories;
 
 import com.cognizant.productservice.entities.Product;
 import com.cognizant.productservice.main.ProductServiceApplication;
+import com.cognizant.productservice.repositories.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;

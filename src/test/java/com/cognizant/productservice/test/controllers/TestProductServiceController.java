@@ -1,5 +1,6 @@
-package com.cognizant.productservice.controllers;
+package com.cognizant.productservice.test.controllers;
 
+import com.cognizant.productservice.controllers.ProductServiceController;
 import com.cognizant.productservice.dtos.ProductDTO;
 import com.cognizant.productservice.main.ProductServiceApplication;
 import com.cognizant.productservice.services.ProductService;

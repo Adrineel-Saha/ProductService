@@ -1,6 +1,7 @@
-package com.cognizant.productservice.main;
+package com.cognizant.productservice.test.main;
 
 import com.cognizant.productservice.controllers.ProductServiceController;
+import com.cognizant.productservice.main.ProductServiceApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

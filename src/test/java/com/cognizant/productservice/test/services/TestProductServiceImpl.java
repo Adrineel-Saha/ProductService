@@ -1,10 +1,11 @@
-package com.cognizant.productservice.services;
+package com.cognizant.productservice.test.services;
 
 import com.cognizant.productservice.dtos.ProductDTO;
 import com.cognizant.productservice.entities.Product;
 import com.cognizant.productservice.exceptions.ProductNameNotFoundException;
 import com.cognizant.productservice.exceptions.ResourceNotFoundException;
 import com.cognizant.productservice.repositories.ProductRepository;
+import com.cognizant.productservice.services.ProductServiceImpl;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
