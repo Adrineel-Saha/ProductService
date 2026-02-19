@@ -159,7 +159,7 @@ public class ProductServiceController {
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable("id") Long id,@Valid @RequestBody ProductDTO productDTO){
         log.info("Updating Product with Id: " + id + " and details: " + productDTO);
         ProductDTO responseProductDTO =productService.updateProduct(id, productDTO);
-        log.info("Updated User: " + responseProductDTO);
+        log.info("Updated Product: " + responseProductDTO);
         if(responseProductDTO != null){
             return new ResponseEntity<>(responseProductDTO, HttpStatus.ACCEPTED);
         }
