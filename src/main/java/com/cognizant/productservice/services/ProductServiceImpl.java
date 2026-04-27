@@ -5,6 +5,7 @@ import com.cognizant.productservice.entities.Product;
 import com.cognizant.productservice.exceptions.ProductNameNotFoundException;
 import com.cognizant.productservice.exceptions.ResourceNotFoundException;
 import com.cognizant.productservice.repositories.ProductRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,13 +15,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
     private ModelMapper modelMapper;
 
-    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
+//    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
