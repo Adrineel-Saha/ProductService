@@ -1,4 +1,4 @@
-package com.cognizant.productservice.test.services;
+﻿package com.cognizant.productservice.test.services;
 
 import com.cognizant.productservice.dtos.ProductDTO;
 import com.cognizant.productservice.entities.Product;
@@ -29,7 +29,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TestProductServiceImpl {
+class TestProductServiceImpl {
     @Mock
     private ProductRepository productRepository;
     @Mock

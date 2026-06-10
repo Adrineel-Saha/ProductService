@@ -1,4 +1,4 @@
-package com.cognizant.productservice.test.repositories;
+﻿package com.cognizant.productservice.test.repositories;
 
 import com.cognizant.productservice.entities.Product;
 import com.cognizant.productservice.main.ProductServiceApplication;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataJpaTest
 @ContextConfiguration(classes = ProductServiceApplication.class)
 @ActiveProfiles("test")
-public class TestProductRepository {
+class TestProductRepository {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
