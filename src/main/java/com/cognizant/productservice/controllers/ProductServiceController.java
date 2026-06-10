@@ -29,8 +29,6 @@ public class ProductServiceController {
     @Autowired
     private ProductService productService;
 
-//    private static final Logger log = LoggerFactory.getLogger(ProductServiceController.class);
-
     @PostMapping
     @Operation(
             summary="Create Product REST API",

@@ -22,8 +22,6 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ModelMapper modelMapper;
 
-//    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
-
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
         Product product=modelMapper.map(productDTO,Product.class);
