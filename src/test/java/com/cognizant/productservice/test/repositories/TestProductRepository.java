@@ -25,7 +25,7 @@ public class TestProductRepository {
     private TestEntityManager entityManager;
 
     @Test
-    public void testFindAllPositive(){
+    void testFindAllPositive(){
         Product product=new Product();
         product.setName("Mechanical Keyboard");
         product.setDescription("RGB backlit mechanical keyboard with blue switches.");
@@ -39,13 +39,13 @@ public class TestProductRepository {
     }
 
     @Test
-    public void testFindAllNegative(){
+    void testFindAllNegative(){
         List<Product> productList = productRepository.findAll();
         assertTrue(!productList.iterator().hasNext());
     }
 
     @Test
-    public void testFindByIdPositive(){
+    void testFindByIdPositive(){
         Product product=new Product();
         product.setName("Wireless Mouse");
         product.setDescription("Ergonomic 2.4GHz wireless mouse with adjustable DPI.");
@@ -60,13 +60,13 @@ public class TestProductRepository {
     }
 
     @Test
-    public void testFindByIdNegative(){
+    void testFindByIdNegative(){
         Optional<Product> productOptional=productRepository.findById(2L);
         assertTrue(!productOptional.isPresent());
     }
 
     @Test
-    public void testSavePositive(){
+    void testSavePositive(){
         Product product=new Product();
         product.setName("Portable SSD 1TB");
         product.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -81,13 +81,13 @@ public class TestProductRepository {
     }
 
     @Test
-    public void testSaveNegative(){
+    void testSaveNegative(){
         Optional<Product> productOptional=productRepository.findById(3L);
         assertTrue(!productOptional.isPresent());
     }
 
     @Test
-    public void deletePositive(){
+    void deletePositive(){
         Product product=new Product();
         product.setName("USB-B Hub");
         product.setDescription("6-in-1 USB-b hub with HDMI, USB 3.0, SD/TF reader.");
@@ -103,13 +103,13 @@ public class TestProductRepository {
     }
 
     @Test
-    public void deleteNegative(){
+    void deleteNegative(){
         Optional<Product> productOptional=productRepository.findById(4L);
         assertTrue(!productOptional.isPresent());
     }
 
     @Test
-    public void findByEmailPositive(){
+    void findByEmailPositive(){
         Product product=new Product();
         product.setName("Wireless Mouse");
         product.setDescription("Ergonomic 2.4GHz wireless mouse with adjustable DPI.");
@@ -124,7 +124,7 @@ public class TestProductRepository {
     }
 
     @Test
-    public void findByEmailNegative(){
+    void findByEmailNegative(){
         List<Product> productList=productRepository.findByName("USB-B Hub");
         assertTrue(!productList.iterator().hasNext());
     }

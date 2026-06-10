@@ -20,17 +20,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes= ProductServiceApplication.class)
+@SpringBootTest(classes = ProductServiceApplication.class)
 @ActiveProfiles("test")
 public class TestProductServiceController {
+
     @Mock
     private ProductService productService;
+
     @InjectMocks
     private ProductServiceController productServiceController;
 
@@ -44,14 +44,13 @@ public class TestProductServiceController {
 
     @AfterEach
     void tearDown() throws Exception {
-
     }
 
     @Test
-    public void testGetAllProductsPositiveAssertReturnValue() {
-        List<ProductDTO> productDTOList=new ArrayList<>();
+    void testGetAllProductsPositiveAssertReturnValue() {
+        List<ProductDTO> productDTOList = new ArrayList<>();
 
-        ProductDTO productDTO=new ProductDTO();
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -62,19 +61,19 @@ public class TestProductServiceController {
 
         try {
             when(productService.getAllProducts()).thenReturn(productDTOList);
-            ResponseEntity<List<ProductDTO>> responseEntity=productServiceController.getAllProducts();
-            List<ProductDTO> actualProductDTOList=responseEntity.getBody();
-            assertTrue(actualProductDTOList.size()>0);
-        }catch(Exception e) {
+            ResponseEntity<List<ProductDTO>> responseEntity = productServiceController.getAllProducts();
+            List<ProductDTO> actualProductDTOList = responseEntity.getBody();
+            assertTrue(actualProductDTOList.size() > 0);
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testGetAllProductsPositiveAssertStatusCode() {
-        List<ProductDTO> productDTOList=new ArrayList<>();
+    void testGetAllProductsPositiveAssertStatusCode() {
+        List<ProductDTO> productDTOList = new ArrayList<>();
 
-        ProductDTO productDTO=new ProductDTO();
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -85,42 +84,42 @@ public class TestProductServiceController {
 
         try {
             when(productService.getAllProducts()).thenReturn(productDTOList);
-            ResponseEntity<List<ProductDTO>> responseEntity=productServiceController.getAllProducts();
-            assertEquals(200,responseEntity.getStatusCode().value());
-        }catch(Exception e) {
+            ResponseEntity<List<ProductDTO>> responseEntity = productServiceController.getAllProducts();
+            assertEquals(200, responseEntity.getStatusCode().value());
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testGetAllProductsNegativeAssertReturnValue() {
-        List<ProductDTO> productDTOList=new ArrayList<>();
+    void testGetAllProductsNegativeAssertReturnValue() {
+        List<ProductDTO> productDTOList = new ArrayList<>();
         try {
             when(productService.getAllProducts()).thenReturn(productDTOList);
-            ResponseEntity<List<ProductDTO>> responseEntity=productServiceController.getAllProducts();
+            ResponseEntity<List<ProductDTO>> responseEntity = productServiceController.getAllProducts();
             assertNull(responseEntity.getBody());
-        }catch(Exception e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testGetAllProductsNegativeAssertStatusCode() {
-        List<ProductDTO> productDTOList=new ArrayList<>();
+    void testGetAllProductsNegativeAssertStatusCode() {
+        List<ProductDTO> productDTOList = new ArrayList<>();
         try {
             when(productService.getAllProducts()).thenReturn(productDTOList);
-            ResponseEntity<List<ProductDTO>> responseEntity=productServiceController.getAllProducts();
-            assertEquals(400,responseEntity.getStatusCode().value());
-        }catch(Exception e) {
+            ResponseEntity<List<ProductDTO>> responseEntity = productServiceController.getAllProducts();
+            assertEquals(400, responseEntity.getStatusCode().value());
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testGetProductsByNamePositiveAssertReturnValue() {
-        List<ProductDTO> productDTOList=new ArrayList<>();
+    void testGetProductsByNamePositiveAssertReturnValue() {
+        List<ProductDTO> productDTOList = new ArrayList<>();
 
-        ProductDTO productDTO=new ProductDTO();
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -131,19 +130,19 @@ public class TestProductServiceController {
 
         try {
             when(productService.getProductsByName(anyString())).thenReturn(productDTOList);
-            ResponseEntity<List<ProductDTO>> responseEntity=productServiceController.getProductsByName("Portable SSD 1TB");
-            List<ProductDTO> actualProductDTOList=responseEntity.getBody();
-            assertTrue(actualProductDTOList.size()>0);
-        }catch(Exception e) {
+            ResponseEntity<List<ProductDTO>> responseEntity = productServiceController.getProductsByName("Portable SSD 1TB");
+            List<ProductDTO> actualProductDTOList = responseEntity.getBody();
+            assertTrue(actualProductDTOList.size() > 0);
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testGetProductsByNamePositiveAssertStatusCode() {
-        List<ProductDTO> productDTOList=new ArrayList<>();
+    void testGetProductsByNamePositiveAssertStatusCode() {
+        List<ProductDTO> productDTOList = new ArrayList<>();
 
-        ProductDTO productDTO=new ProductDTO();
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -154,40 +153,40 @@ public class TestProductServiceController {
 
         try {
             when(productService.getProductsByName(anyString())).thenReturn(productDTOList);
-            ResponseEntity<List<ProductDTO>> responseEntity=productServiceController.getProductsByName("Portable SSD 1TB");
-            assertEquals(200,responseEntity.getStatusCode().value());
-        }catch(Exception e) {
+            ResponseEntity<List<ProductDTO>> responseEntity = productServiceController.getProductsByName("Portable SSD 1TB");
+            assertEquals(200, responseEntity.getStatusCode().value());
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testGetProductsByNameNegativeAssertReturnValue() {
-        List<ProductDTO> productDTOList=new ArrayList<>();
+    void testGetProductsByNameNegativeAssertReturnValue() {
+        List<ProductDTO> productDTOList = new ArrayList<>();
         try {
             when(productService.getProductsByName(anyString())).thenReturn(productDTOList);
-            ResponseEntity<List<ProductDTO>> responseEntity=productServiceController.getProductsByName("Portable SSD 1TB");
+            ResponseEntity<List<ProductDTO>> responseEntity = productServiceController.getProductsByName("Portable SSD 1TB");
             assertNull(responseEntity.getBody());
-        }catch(Exception e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testGetProductsByNameNegativeAssertStatusCode() {
-        List<ProductDTO> productDTOList=new ArrayList<>();
+    void testGetProductsByNameNegativeAssertStatusCode() {
+        List<ProductDTO> productDTOList = new ArrayList<>();
         try {
             when(productService.getProductsByName(anyString())).thenReturn(productDTOList);
-            ResponseEntity<List<ProductDTO>> responseEntity=productServiceController.getProductsByName("Portable SSD 1TB");
-            assertEquals(400,responseEntity.getStatusCode().value());
-        }catch(Exception e) {
+            ResponseEntity<List<ProductDTO>> responseEntity = productServiceController.getProductsByName("Portable SSD 1TB");
+            assertEquals(400, responseEntity.getStatusCode().value());
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testDeleteProductPositiveAssertReturnValue() {
-        ProductDTO productDTO=new ProductDTO();
+    void testDeleteProductPositiveAssertReturnValue() {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -196,17 +195,17 @@ public class TestProductServiceController {
 
         try {
             when(productService.deleteProduct(any())).thenReturn("Product deleted with Id: " + productDTO.getId());
-            ResponseEntity<String> responseEntity=productServiceController.deleteProduct(1L);
-            String result=responseEntity.getBody();
+            ResponseEntity<String> responseEntity = productServiceController.deleteProduct(1L);
+            String result = responseEntity.getBody();
             assertNotNull(result);
-        }catch(Exception e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testGetDeletePositiveAssertStatusCode() {
-        ProductDTO productDTO=new ProductDTO();
+    void testDeleteProductPositiveAssertStatusCode() {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -215,40 +214,40 @@ public class TestProductServiceController {
 
         try {
             when(productService.deleteProduct(any())).thenReturn("Product deleted with Id: " + productDTO.getId());
-            ResponseEntity<String> responseEntity=productServiceController.deleteProduct(1L);
-            assertEquals(200,responseEntity.getStatusCode().value());
-        }catch(Exception e) {
+            ResponseEntity<String> responseEntity = productServiceController.deleteProduct(1L);
+            assertEquals(200, responseEntity.getStatusCode().value());
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testDeleteUserNegativeAssertReturnValue() {
-        String result=null;
+    void testDeleteProductNegativeAssertReturnValue() {
+        String result = null;
         try {
             when(productService.deleteProduct(any())).thenReturn(result);
-            ResponseEntity<String> responseEntity=productServiceController.deleteProduct(1L);
+            ResponseEntity<String> responseEntity = productServiceController.deleteProduct(1L);
             assertNull(responseEntity.getBody());
-        }catch(Exception e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testDeleteUserNegativeAssertStatusCode() {
-        String result=null;
+    void testDeleteProductNegativeAssertStatusCode() {
+        String result = null;
         try {
             when(productService.deleteProduct(any())).thenReturn(result);
-            ResponseEntity<String> responseEntity=productServiceController.deleteProduct(1L);
-            assertEquals(400,responseEntity.getStatusCode().value());
-        }catch(Exception e) {
+            ResponseEntity<String> responseEntity = productServiceController.deleteProduct(1L);
+            assertEquals(400, responseEntity.getStatusCode().value());
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testGetProductPositiveAssertReturnValue() {
-        ProductDTO productDTO=new ProductDTO();
+    void testGetProductPositiveAssertReturnValue() {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -257,17 +256,17 @@ public class TestProductServiceController {
 
         try {
             when(productService.getProduct(any())).thenReturn(productDTO);
-            ResponseEntity<ProductDTO> responseEntity=productServiceController.getProduct(1L);
-            ProductDTO actualProductDTO=responseEntity.getBody();
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.getProduct(1L);
+            ProductDTO actualProductDTO = responseEntity.getBody();
             assertNotNull(actualProductDTO);
-        }catch(Exception e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testGetProductPositiveAssertStatusCode() {
-        ProductDTO productDTO=new ProductDTO();
+    void testGetProductPositiveAssertStatusCode() {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -276,52 +275,52 @@ public class TestProductServiceController {
 
         try {
             when(productService.getProduct(any())).thenReturn(productDTO);
-            ResponseEntity<ProductDTO> responseEntity=productServiceController.getProduct(1L);
-            assertEquals(200,responseEntity.getStatusCode().value());
-        }catch(Exception e) {
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.getProduct(1L);
+            assertEquals(200, responseEntity.getStatusCode().value());
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testGetProductNegativeAssertReturnValue() {
-        ProductDTO productDTO=null;
+    void testGetProductNegativeAssertReturnValue() {
+        ProductDTO productDTO = null;
         try {
             when(productService.getProduct(any())).thenReturn(productDTO);
-            ResponseEntity<ProductDTO> responseEntity=productServiceController.getProduct(1L);
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.getProduct(1L);
             assertNull(responseEntity.getBody());
-        }catch(Exception e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testGetProductNegativeAssertStatusCode() {
-        ProductDTO productDTO=null;
+    void testGetProductNegativeAssertStatusCode() {
+        ProductDTO productDTO = null;
         try {
             when(productService.getProduct(any())).thenReturn(productDTO);
-            ResponseEntity<ProductDTO> responseEntity=productServiceController.getProduct(1L);
-            assertEquals(400,responseEntity.getStatusCode().value());
-        }catch(Exception e) {
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.getProduct(1L);
+            assertEquals(400, responseEntity.getStatusCode().value());
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testAddProductWhenProductIsValid() {
-        ProductDTO productDTO=new ProductDTO();
+    void testAddProductWhenProductIsValid() {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
         productDTO.setPrice(3099);
         productDTO.setStock(200);
 
-        validator.validate(productDTO).stream().forEach((constraintViolation)->assertNull(constraintViolation));
+        validator.validate(productDTO).stream().forEach((constraintViolation) -> assertNull(constraintViolation));
     }
 
     @Test
-    public void testAddProductPositiveAssertReturnValue() {
-        ProductDTO productDTO=new ProductDTO();
+    void testAddProductPositiveAssertReturnValue() {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -330,17 +329,17 @@ public class TestProductServiceController {
 
         try {
             when(productService.createProduct(any(ProductDTO.class))).thenReturn(productDTO);
-            ResponseEntity<ProductDTO> responseEntity=productServiceController.createProduct(productDTO);
-            ProductDTO actualProductDTO=responseEntity.getBody();
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.createProduct(productDTO);
+            ProductDTO actualProductDTO = responseEntity.getBody();
             assertNotNull(actualProductDTO);
-        }catch(Exception e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testAddProductPositiveAssertStatusCode() {
-        ProductDTO productDTO=new ProductDTO();
+    void testAddProductPositiveAssertStatusCode() {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -349,67 +348,67 @@ public class TestProductServiceController {
 
         try {
             when(productService.createProduct(any(ProductDTO.class))).thenReturn(productDTO);
-            ResponseEntity<ProductDTO> responseEntity=productServiceController.createProduct(productDTO);
-            assertEquals(201,responseEntity.getStatusCode().value());
-        }catch(Exception e) {
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.createProduct(productDTO);
+            assertEquals(201, responseEntity.getStatusCode().value());
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testAddProductWhenProductIsNotValid() {
-        ProductDTO productDTO=new ProductDTO();
+    void testAddProductWhenProductIsNotValid() {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("");
         productDTO.setDescription("");
         productDTO.setPrice(-3099);
         productDTO.setStock(-200);
 
-        validator.validate(productDTO).stream().forEach((constraintViolation)->assertNotNull(constraintViolation));
+        validator.validate(productDTO).stream().forEach((constraintViolation) -> assertNotNull(constraintViolation));
     }
 
     @Test
-    public void testAddProductNegativeAssertReturnValue() {
-        ProductDTO productDTO=null;
+    void testAddProductNegativeAssertReturnValue() {
+        ProductDTO productDTO = null;
 
         try {
             when(productService.createProduct(any(ProductDTO.class))).thenReturn(productDTO);
-            ResponseEntity<ProductDTO> responseEntity=productServiceController.createProduct(productDTO);
-            ProductDTO actualProductDTO=responseEntity.getBody();
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.createProduct(productDTO);
+            ProductDTO actualProductDTO = responseEntity.getBody();
             assertNull(actualProductDTO);
-        }catch(Exception e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testAddProductNegativeAssertStatusCode() {
-        ProductDTO productDTO=null;
+    void testAddProductNegativeAssertStatusCode() {
+        ProductDTO productDTO = null;
 
         try {
             when(productService.createProduct(any(ProductDTO.class))).thenReturn(productDTO);
-            ResponseEntity<ProductDTO> responseEntity=productServiceController.createProduct(productDTO);
-            assertEquals(400,responseEntity.getStatusCode().value());
-        }catch(Exception e) {
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.createProduct(productDTO);
+            assertEquals(400, responseEntity.getStatusCode().value());
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testUpdateProductWhenProductIsValid() {
-        ProductDTO productDTO=new ProductDTO();
+    void testUpdateProductWhenProductIsValid() {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
         productDTO.setPrice(3099);
         productDTO.setStock(200);
 
-        validator.validate(productDTO).stream().forEach((constraintViolation)->assertNull(constraintViolation));
+        validator.validate(productDTO).stream().forEach((constraintViolation) -> assertNull(constraintViolation));
     }
 
     @Test
-    public void testUpdateProductPositiveAssertReturnValue() {
-        ProductDTO productDTO=new ProductDTO();
+    void testUpdateProductPositiveAssertReturnValue() {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -417,18 +416,18 @@ public class TestProductServiceController {
         productDTO.setStock(200);
 
         try {
-            when(productService.updateProduct(any(),any(ProductDTO.class))).thenReturn(productDTO);
-            ResponseEntity<ProductDTO> responseEntity=productServiceController.updateProduct(1L,productDTO);
-            ProductDTO actualProductDTO=responseEntity.getBody();
+            when(productService.updateProduct(any(), any(ProductDTO.class))).thenReturn(productDTO);
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.updateProduct(1L, productDTO);
+            ProductDTO actualProductDTO = responseEntity.getBody();
             assertNotNull(actualProductDTO);
-        }catch(Exception e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testUpdateProductPositiveAssertStatusCode() {
-        ProductDTO productDTO=new ProductDTO();
+    void testUpdateProductPositiveAssertStatusCode() {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("Portable SSD 1TB");
         productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
@@ -436,52 +435,163 @@ public class TestProductServiceController {
         productDTO.setStock(200);
 
         try {
-            when(productService.updateProduct(any(),any(ProductDTO.class))).thenReturn(productDTO);
-            ResponseEntity<ProductDTO> responseEntity=productServiceController.updateProduct(1L,productDTO);
-            assertEquals(202,responseEntity.getStatusCode().value());
-        }catch(Exception e) {
+            when(productService.updateProduct(any(), any(ProductDTO.class))).thenReturn(productDTO);
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.updateProduct(1L, productDTO);
+            assertEquals(202, responseEntity.getStatusCode().value());
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testUpdateProductWhenProductIsNotValid() {
-        ProductDTO productDTO=new ProductDTO();
+    void testUpdateProductWhenProductIsNotValid() {
+        ProductDTO productDTO = new ProductDTO();
         productDTO.setId(1L);
         productDTO.setName("");
         productDTO.setDescription("");
         productDTO.setPrice(-3099);
         productDTO.setStock(-200);
 
-        validator.validate(productDTO).stream().forEach((constraintViolation)->assertNotNull(constraintViolation));
+        validator.validate(productDTO).stream().forEach((constraintViolation) -> assertNotNull(constraintViolation));
     }
 
     @Test
-    public void testUpdateProductNegativeAssertReturnValue() {
-        ProductDTO productDTO=null;
+    void testUpdateProductNegativeAssertReturnValue() {
+        ProductDTO productDTO = null;
 
         try {
-            when(productService.updateProduct(any(),any(ProductDTO.class))).thenReturn(productDTO);
-            ResponseEntity<ProductDTO> responseEntity=productServiceController.updateProduct(1L,productDTO);
-            ProductDTO actualProductDTO=responseEntity.getBody();
+            when(productService.updateProduct(any(), any(ProductDTO.class))).thenReturn(productDTO);
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.updateProduct(1L, productDTO);
+            ProductDTO actualProductDTO = responseEntity.getBody();
             assertNull(actualProductDTO);
-        }catch(Exception e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
     @Test
-    public void testUpdateUserNegativeAssertStatusCode() {
-        ProductDTO productDTO=null;
+    void testUpdateProductNegativeAssertStatusCode() {
+        ProductDTO productDTO = null;
 
         try {
-            when(productService.updateProduct(any(),any(ProductDTO.class))).thenReturn(productDTO);
-            ResponseEntity<ProductDTO> responseEntity=productServiceController.updateProduct(1L,productDTO);
-            assertEquals(400,responseEntity.getStatusCode().value());
-        }catch(Exception e) {
+            when(productService.updateProduct(any(), any(ProductDTO.class))).thenReturn(productDTO);
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.updateProduct(1L, productDTO);
+            assertEquals(400, responseEntity.getStatusCode().value());
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
 
+    @Test
+    void testGetProductPositiveAssertName() {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(1L);
+        productDTO.setName("Portable SSD 1TB");
+        productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
+        productDTO.setPrice(3099);
+        productDTO.setStock(200);
 
+        try {
+            when(productService.getProduct(any())).thenReturn(productDTO);
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.getProduct(1L);
+            assertEquals("Portable SSD 1TB", responseEntity.getBody().getName());
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    void testGetProductPositiveAssertPrice() {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(1L);
+        productDTO.setName("Portable SSD 1TB");
+        productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
+        productDTO.setPrice(3099);
+        productDTO.setStock(200);
+
+        try {
+            when(productService.getProduct(any())).thenReturn(productDTO);
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.getProduct(1L);
+            assertEquals(3099, responseEntity.getBody().getPrice());
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    void testGetProductsByNamePositiveAssertListSize() {
+        List<ProductDTO> productDTOList = new ArrayList<>();
+
+        ProductDTO productDTO1 = new ProductDTO();
+        productDTO1.setId(1L);
+        productDTO1.setName("Mechanical Keyboard");
+        productDTO1.setDescription("RGB backlit mechanical keyboard with blue switches.");
+        productDTO1.setPrice(5099);
+        productDTO1.setStock(200);
+
+        ProductDTO productDTO2 = new ProductDTO();
+        productDTO2.setId(2L);
+        productDTO2.setName("Mechanical Keyboard");
+        productDTO2.setDescription("Compact tenkeyless mechanical keyboard.");
+        productDTO2.setPrice(4599);
+        productDTO2.setStock(150);
+
+        productDTOList.add(productDTO1);
+        productDTOList.add(productDTO2);
+
+        try {
+            when(productService.getProductsByName(anyString())).thenReturn(productDTOList);
+            ResponseEntity<List<ProductDTO>> responseEntity = productServiceController.getProductsByName("Mechanical Keyboard");
+            assertEquals(2, responseEntity.getBody().size());
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    void testAddProductPositiveAssertName() {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(1L);
+        productDTO.setName("Portable SSD 1TB");
+        productDTO.setDescription("High-speed USB 3.2 Gen 2 portable solid-state drive.");
+        productDTO.setPrice(3099);
+        productDTO.setStock(200);
+
+        try {
+            when(productService.createProduct(any(ProductDTO.class))).thenReturn(productDTO);
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.createProduct(productDTO);
+            assertEquals("Portable SSD 1TB", responseEntity.getBody().getName());
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    void testDeleteProductPositiveAssertMessage() {
+        try {
+            when(productService.deleteProduct(any())).thenReturn("Product deleted with Id: 1");
+            ResponseEntity<String> responseEntity = productServiceController.deleteProduct(1L);
+            assertEquals("Product deleted with Id: 1", responseEntity.getBody());
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    void testUpdateProductPositiveAssertUpdatedName() {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(1L);
+        productDTO.setName("Updated Keyboard");
+        productDTO.setDescription("Updated description.");
+        productDTO.setPrice(5500);
+        productDTO.setStock(150);
+
+        try {
+            when(productService.updateProduct(any(), any(ProductDTO.class))).thenReturn(productDTO);
+            ResponseEntity<ProductDTO> responseEntity = productServiceController.updateProduct(1L, productDTO);
+            assertEquals("Updated Keyboard", responseEntity.getBody().getName());
+        } catch (Exception e) {
+            assertTrue(false);
+        }
+    }
 }
