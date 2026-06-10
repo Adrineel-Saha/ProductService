@@ -1,4 +1,4 @@
-﻿package com.cognizant.productservice.test.services;
+package com.cognizant.productservice.test.services;
 
 import com.cognizant.productservice.dtos.ProductDTO;
 import com.cognizant.productservice.entities.Product;

@@ -1,4 +1,4 @@
-﻿package com.cognizant.productservice.test.repositories;
+package com.cognizant.productservice.test.repositories;
 
 import com.cognizant.productservice.entities.Product;
 import com.cognizant.productservice.main.ProductServiceApplication;

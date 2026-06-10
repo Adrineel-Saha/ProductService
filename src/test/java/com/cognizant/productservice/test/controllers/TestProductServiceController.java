@@ -1,4 +1,4 @@
-﻿package com.cognizant.productservice.test.controllers;
+package com.cognizant.productservice.test.controllers;
 
 import com.cognizant.productservice.controllers.ProductServiceController;
 import com.cognizant.productservice.dtos.ProductDTO;

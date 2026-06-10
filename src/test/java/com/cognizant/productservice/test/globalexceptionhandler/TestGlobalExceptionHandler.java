@@ -1,4 +1,4 @@
-﻿package com.cognizant.productservice.test.globalexceptionhandler;
+package com.cognizant.productservice.test.globalexceptionhandler;
 
 import com.cognizant.productservice.exceptions.ProductNameNotFoundException;
 import com.cognizant.productservice.exceptions.ResourceNotFoundException;
