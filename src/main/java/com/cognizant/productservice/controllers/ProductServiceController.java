@@ -23,7 +23,6 @@ import java.util.List;
         name="CRUD REST APIs for Product Service",
         description="CRUD REST APIs - Create Product, Get Product, Update Product, Delete Product"
 )
-@CrossOrigin(originPatterns = { "http://*:9191", "https://*:9191", "http://*:4200", "https://*:4200" })
 @Slf4j
 public class ProductServiceController {
     @Autowired

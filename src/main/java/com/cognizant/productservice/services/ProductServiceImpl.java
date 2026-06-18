@@ -7,9 +7,9 @@ import com.cognizant.productservice.exceptions.ResourceNotFoundException;
 import com.cognizant.productservice.repositories.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,12 +21,20 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private KafkaTemplate<String, ProductDTO> kafkaTemplate;
+    @Value("${app.kafka.productproducer.topic}")
+    private String topic;
 
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
         Product product=modelMapper.map(productDTO,Product.class);
         Product savedProduct=productRepository.save(product);
         ProductDTO savedProductDTO = modelMapper.map(savedProduct,ProductDTO.class);
+
+        kafkaTemplate.send(topic, savedProductDTO);
+        log.info("Published ProductDTO to {}: {}", topic, savedProductDTO);
+
         return savedProductDTO;
     }
 
@@ -50,6 +58,10 @@ public class ProductServiceImpl implements ProductService {
         );
 
         ProductDTO productDTO=modelMapper.map(product,ProductDTO.class);
+
+        kafkaTemplate.send(topic, productDTO);
+        log.info("Published ProductDTO to {}: {}", topic, productDTO);
+
         return productDTO;
     }
 
@@ -78,8 +90,11 @@ public class ProductServiceImpl implements ProductService {
         product.setStock(productDTO.getStock());
 
         Product updatedProduct=productRepository.save(product);
-
         ProductDTO updatedProductDTO=modelMapper.map(updatedProduct, ProductDTO.class);
+
+        kafkaTemplate.send(topic, updatedProductDTO);
+        log.info("Published ProductDTO to {}: {}", topic, updatedProductDTO);
+
         return updatedProductDTO;
     }
 
