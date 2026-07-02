@@ -44,9 +44,9 @@ public class ProductServiceController {
             )
     })
     public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDTO){
-        log.info("Adding new Product: " + productDTO);
+        log.info("Adding new Product: {}", productDTO);
         ProductDTO responseProductDTO =productService.createProduct(productDTO);
-        log.info("Created Product: " + responseProductDTO);
+        log.info("Created Product: {}", responseProductDTO);
 
         if(responseProductDTO!=null){
             return new ResponseEntity<>(responseProductDTO, HttpStatus.CREATED);
@@ -74,7 +74,7 @@ public class ProductServiceController {
     public ResponseEntity<List<ProductDTO>> getAllProducts(){
         log.info("Getting All Products");
         List<ProductDTO> responseProductDTOList =productService.getAllProducts();
-        log.info("Products list: " + responseProductDTOList);
+        log.info("Products list: {}", responseProductDTOList);
         if(responseProductDTOList!=null && !responseProductDTOList.isEmpty()){
             return new ResponseEntity<>(responseProductDTOList, HttpStatus.OK);
         }
@@ -99,9 +99,9 @@ public class ProductServiceController {
             )
     })
     public ResponseEntity<ProductDTO> getProduct(@PathVariable("id") Long id){
-        log.info("Getting Product with Id: " + id);
+        log.info("Getting Product with Id: {}", id);
         ProductDTO responseProductDTO =productService.getProduct(id);
-        log.info("Found Product: " + responseProductDTO);
+        log.info("Found Product: {}", responseProductDTO);
         if (responseProductDTO != null) {
             return new ResponseEntity<>(responseProductDTO, HttpStatus.OK);
         }
@@ -128,7 +128,7 @@ public class ProductServiceController {
     public ResponseEntity<List<ProductDTO>> getProductsByName(@PathVariable("name") String name){
         log.info("Getting All Products By Name");
         List<ProductDTO> responseProductDTOList =productService.getProductsByName(name);
-        log.info("Products list: " + responseProductDTOList);
+        log.info("Products list: {}", responseProductDTOList);
         if(responseProductDTOList!=null && !responseProductDTOList.isEmpty()){
             return new ResponseEntity<>(responseProductDTOList, HttpStatus.OK);
         }
@@ -157,9 +157,9 @@ public class ProductServiceController {
             )
     })
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable("id") Long id,@Valid @RequestBody ProductDTO productDTO){
-        log.info("Updating Product with Id: " + id + " and details: " + productDTO);
+        log.info("Updating Product with Id: {} and details: {}", id, productDTO);
         ProductDTO responseProductDTO =productService.updateProduct(id, productDTO);
-        log.info("Updated Product: " + responseProductDTO);
+        log.info("Updated Product: {}", responseProductDTO);
         if(responseProductDTO != null){
             return new ResponseEntity<>(responseProductDTO, HttpStatus.ACCEPTED);
         }
@@ -185,7 +185,7 @@ public class ProductServiceController {
             ),
     })
     public ResponseEntity<String>  deleteProduct(@PathVariable("id") Long id){
-        log.info("Deleting Product with Id: " + id);
+        log.info("Deleting Product with Id: {}", id);
         String result=productService.deleteProduct(id);
         if (result != null) {
             return new ResponseEntity<>(result, HttpStatus.OK);

@@ -8,7 +8,7 @@ import com.cognizant.productservice.repositories.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -104,7 +104,7 @@ public class ProductServiceImpl implements ProductService {
                 ()->new ResourceNotFoundException("Product not found with Id: " + id)
         );
 
-        log.info("Deleted Product: " + product);
+        log.info("Deleted Product: {}", product);
 
         productRepository.delete(product);
         return "Product deleted with Id: " + id;
