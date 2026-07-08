@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @Slf4j
+@Transactional(readOnly = true)
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
@@ -27,6 +29,7 @@ public class ProductServiceImpl implements ProductService {
 //    private String topic;
 
     @Override
+    @Transactional
     public ProductDTO createProduct(ProductDTO productDTO) {
         Product product=modelMapper.map(productDTO,Product.class);
         Product savedProduct=productRepository.save(product);
@@ -79,6 +82,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
         Product product=productRepository.findById(id).orElseThrow(
                 ()->new ResourceNotFoundException("Product not found with Id: " + id)
@@ -99,6 +103,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public String deleteProduct(Long id) {
         Product product=productRepository.findById(id).orElseThrow(
                 ()->new ResourceNotFoundException("Product not found with Id: " + id)
