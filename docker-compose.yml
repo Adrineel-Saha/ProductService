@@ -11,6 +11,11 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
       - EUREKA_INSTANCE_PREFERIPADDRESS=true
       - "SPRING_DATASOURCE_URL=jdbc:mysql://product-mysql:3306/ProductServiceDatabase?allowPublicKeyRetrieval=true&useSSL=false"
+      # Config repo sets spring.kafka.producer.bootstrap-servers=http://localhost:9092.
+      # Override the producer sub-key (for sending) and the global key (used by
+      # KafkaAdmin to create the NewTopic bean) to reach the broker container.
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
     depends_on:
       product-mysql:
         condition: service_healthy

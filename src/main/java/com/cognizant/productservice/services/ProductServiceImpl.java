@@ -8,8 +8,8 @@ import com.cognizant.productservice.repositories.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +23,10 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
     @Autowired
     private ModelMapper modelMapper;
-//    @Autowired
-//    private KafkaTemplate<String, ProductDTO> kafkaTemplate;
-//    @Value("${app.kafka.productproducer.topic}")
-//    private String topic;
+    @Autowired
+    private KafkaTemplate<String, ProductDTO> kafkaTemplate;
+    @Value("${app.kafka.productproducer.topic}")
+    private String topic;
 
     @Override
     @Transactional
@@ -35,8 +35,8 @@ public class ProductServiceImpl implements ProductService {
         Product savedProduct=productRepository.save(product);
         ProductDTO savedProductDTO = modelMapper.map(savedProduct,ProductDTO.class);
 
-//        kafkaTemplate.send(topic, savedProductDTO);
-//        log.info("Published ProductDTO to {}: {}", topic, savedProductDTO);
+        kafkaTemplate.send(topic, savedProductDTO);
+        log.info("Published ProductDTO to {}: {}", topic, savedProductDTO);
 
         return savedProductDTO;
     }
@@ -62,8 +62,8 @@ public class ProductServiceImpl implements ProductService {
 
         ProductDTO productDTO=modelMapper.map(product,ProductDTO.class);
 
-//        kafkaTemplate.send(topic, productDTO);
-//        log.info("Published ProductDTO to {}: {}", topic, productDTO);
+        kafkaTemplate.send(topic, productDTO);
+        log.info("Published ProductDTO to {}: {}", topic, productDTO);
 
         return productDTO;
     }
@@ -96,8 +96,8 @@ public class ProductServiceImpl implements ProductService {
         Product updatedProduct=productRepository.save(product);
         ProductDTO updatedProductDTO=modelMapper.map(updatedProduct, ProductDTO.class);
 
-//        kafkaTemplate.send(topic, updatedProductDTO);
-//        log.info("Published ProductDTO to {}: {}", topic, updatedProductDTO);
+        kafkaTemplate.send(topic, updatedProductDTO);
+        log.info("Published ProductDTO to {}: {}", topic, updatedProductDTO);
 
         return updatedProductDTO;
     }
