@@ -6,6 +6,8 @@ import com.cognizant.productservice.exceptions.ProductNameNotFoundException;
 import com.cognizant.productservice.exceptions.ResourceNotFoundException;
 import com.cognizant.productservice.repositories.ProductRepository;
 import com.cognizant.productservice.services.ProductServiceImpl;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -20,6 +22,7 @@ import org.modelmapper.ModelMapper;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,6 +37,8 @@ class TestProductServiceImpl {
     private ProductRepository productRepository;
     @Mock
     private ModelMapper modelMapper;
+    @Mock
+    private KafkaTemplate<String, ProductDTO> kafkaTemplate;
     @InjectMocks
     private ProductServiceImpl productServiceImpl;
 
@@ -176,6 +181,8 @@ class TestProductServiceImpl {
 
             when(productRepository.findById(any())).thenReturn(Optional.of(product));
             when(modelMapper.map(any(Product.class),eq(ProductDTO.class))).thenReturn(productDTO);
+            when(kafkaTemplate.send(anyString(),any(ProductDTO.class)))
+                    .thenReturn(CompletableFuture.completedFuture(mock(SendResult.class)));
 
             ProductDTO actualProductDTO=productServiceImpl.getProduct(1L);
             assertNotNull(actualProductDTO);
@@ -260,6 +267,8 @@ class TestProductServiceImpl {
             when(modelMapper.map(any(ProductDTO.class),eq(Product.class))).thenReturn(product);
             when(productRepository.save(any(Product.class))).thenReturn(savedproduct);
             when(modelMapper.map(any(Product.class),eq(ProductDTO.class))).thenReturn(savedproductDTO);
+            when(kafkaTemplate.send(anyString(),any(ProductDTO.class)))
+                    .thenReturn(CompletableFuture.completedFuture(mock(SendResult.class)));
 
             ProductDTO actualProductDTO=productServiceImpl.createProduct(productDTO);
             assertNotNull(actualProductDTO);
@@ -381,6 +390,8 @@ class TestProductServiceImpl {
             when(productRepository.findById(any())).thenReturn(Optional.of(product));
             when(productRepository.save(any(Product.class))).thenReturn(savedproduct);
             when(modelMapper.map(any(Product.class),eq(ProductDTO.class))).thenReturn(savedproductDTO);
+            when(kafkaTemplate.send(anyString(),any(ProductDTO.class)))
+                    .thenReturn(CompletableFuture.completedFuture(mock(SendResult.class)));
 
             ProductDTO actualProductDTO=productServiceImpl.updateProduct(1L,productDTO);
             assertNotNull(actualProductDTO);
@@ -506,6 +517,8 @@ class TestProductServiceImpl {
 
             when(productRepository.findById(any())).thenReturn(Optional.of(product));
             when(modelMapper.map(any(Product.class),eq(ProductDTO.class))).thenReturn(productDTO);
+            when(kafkaTemplate.send(anyString(),any(ProductDTO.class)))
+                    .thenReturn(CompletableFuture.completedFuture(mock(SendResult.class)));
 
             ProductDTO actualProductDTO=productServiceImpl.getProduct(1L);
             assertEquals("Mechanical Keyboard",actualProductDTO.getName());
@@ -533,6 +546,8 @@ class TestProductServiceImpl {
 
             when(productRepository.findById(any())).thenReturn(Optional.of(product));
             when(modelMapper.map(any(Product.class),eq(ProductDTO.class))).thenReturn(productDTO);
+            when(kafkaTemplate.send(anyString(),any(ProductDTO.class)))
+                    .thenReturn(CompletableFuture.completedFuture(mock(SendResult.class)));
 
             ProductDTO actualProductDTO=productServiceImpl.getProduct(1L);
             assertEquals(5099,actualProductDTO.getPrice());
@@ -560,6 +575,8 @@ class TestProductServiceImpl {
 
             when(productRepository.findById(any())).thenReturn(Optional.of(product));
             when(modelMapper.map(any(Product.class),eq(ProductDTO.class))).thenReturn(productDTO);
+            when(kafkaTemplate.send(anyString(),any(ProductDTO.class)))
+                    .thenReturn(CompletableFuture.completedFuture(mock(SendResult.class)));
 
             ProductDTO actualProductDTO=productServiceImpl.getProduct(1L);
             assertEquals(300,actualProductDTO.getStock());
@@ -592,6 +609,8 @@ class TestProductServiceImpl {
             when(modelMapper.map(any(ProductDTO.class),eq(Product.class))).thenReturn(product);
             when(productRepository.save(any(Product.class))).thenReturn(savedProduct);
             when(modelMapper.map(any(Product.class),eq(ProductDTO.class))).thenReturn(savedProductDTO);
+            when(kafkaTemplate.send(anyString(),any(ProductDTO.class)))
+                    .thenReturn(CompletableFuture.completedFuture(mock(SendResult.class)));
 
             ProductDTO actualProductDTO=productServiceImpl.createProduct(productDTO);
             assertEquals("Portable SSD 1TB",actualProductDTO.getName());
@@ -624,6 +643,8 @@ class TestProductServiceImpl {
             when(modelMapper.map(any(ProductDTO.class),eq(Product.class))).thenReturn(product);
             when(productRepository.save(any(Product.class))).thenReturn(savedProduct);
             when(modelMapper.map(any(Product.class),eq(ProductDTO.class))).thenReturn(savedProductDTO);
+            when(kafkaTemplate.send(anyString(),any(ProductDTO.class)))
+                    .thenReturn(CompletableFuture.completedFuture(mock(SendResult.class)));
 
             ProductDTO actualProductDTO=productServiceImpl.createProduct(productDTO);
             assertEquals(3099,actualProductDTO.getPrice());
@@ -683,6 +704,8 @@ class TestProductServiceImpl {
             when(productRepository.findById(any())).thenReturn(Optional.of(existingProduct));
             when(productRepository.save(any(Product.class))).thenReturn(savedProduct);
             when(modelMapper.map(any(Product.class),eq(ProductDTO.class))).thenReturn(savedProductDTO);
+            when(kafkaTemplate.send(anyString(),any(ProductDTO.class)))
+                    .thenReturn(CompletableFuture.completedFuture(mock(SendResult.class)));
 
             ProductDTO actualProductDTO=productServiceImpl.updateProduct(1L,productDTO);
             assertEquals("Updated Keyboard",actualProductDTO.getName());
