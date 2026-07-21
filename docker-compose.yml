@@ -5,6 +5,9 @@ services:
       dockerfile: Dockerfile
     image: product-service
     container_name: product-service
+    # Retry startup until ConfigServer is registered/reachable (handles the
+    # race when everything is started together with one `docker compose up`).
+    restart: on-failure
     ports:
       - "8081:8081"
     environment:
@@ -12,44 +15,18 @@ services:
       - EUREKA_INSTANCE_PREFERIPADDRESS=true
       - "SPRING_DATASOURCE_URL=jdbc:mysql://product-mysql:3306/ProductServiceDatabase?allowPublicKeyRetrieval=true&useSSL=false"
       # Config repo sets spring.kafka.producer.bootstrap-servers=http://localhost:9092.
-      # Override the producer sub-key (for sending) and the global key (used by
-      # KafkaAdmin to create the NewTopic bean) to reach the broker container.
+      # Override to reach the shared broker (see Kafka/docker-compose.yml, which
+      # must be up first). kafka:9092 resolves over microservices-net.
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
       - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
+      # Override the C:/Microservices/logs path (used by Jenkins/local) with a
+      # container path; the volume below maps it back to the same host folder.
+      - LOGGING_FILE_NAME=/app/logs/ProductService/ProductService-8081.log
+    volumes:
+      - C:/Microservices/logs:/app/logs
     depends_on:
       product-mysql:
         condition: service_healthy
-      kafka:
-        condition: service_healthy
-    networks:
-      - microservices-net
-
-  kafka:
-    image: apache/kafka:3.9.0
-    container_name: kafka
-    # Not published to the host (your local Kafka already owns host 9092).
-    # Reachable by other containers at kafka:9092 on the shared network.
-    # NOTE: container_name is fixed to "kafka", so do NOT bring this compose up
-    # at the same time as the OrderService/UserService composes (which also
-    # define a "kafka" container) — the names would collide. Run per-service.
-    environment:
-      - KAFKA_NODE_ID=1
-      - KAFKA_PROCESS_ROLES=broker,controller
-      - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
-      - KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
-      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
-      - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
-      - KAFKA_INTER_BROKER_LISTENER_NAME=PLAINTEXT
-      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
-      - KAFKA_LOG_DIRS=/var/lib/kafka/data
-    volumes:
-      - kafka-data:/var/lib/kafka/data
-    healthcheck:
-      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list || exit 1"]
-      interval: 10s
-      timeout: 10s
-      retries: 10
     networks:
       - microservices-net
 
@@ -73,7 +50,6 @@ services:
 
 volumes:
   product-mysql-data:
-  kafka-data:
 
 networks:
   microservices-net:
