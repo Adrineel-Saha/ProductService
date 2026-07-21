@@ -19,11 +19,11 @@ services:
       # must be up first). kafka:9092 resolves over microservices-net.
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
       - SPRING_KAFKA_PRODUCER_BOOTSTRAP_SERVERS=kafka:9092
-      # Override the C:/Microservices/logs path (used by Jenkins/local) with a
-      # container path; the volume below maps it back to the same host folder.
+      # Config sets logging.file.name to a C:/ path (used by Jenkins/local);
+      # override to a container path written to the 'app-logs' Docker volume.
       - LOGGING_FILE_NAME=/app/logs/ProductService/ProductService-8081.log
     volumes:
-      - C:/Microservices/logs:/app/logs
+      - app-logs:/app/logs
     depends_on:
       product-mysql:
         condition: service_healthy
@@ -50,6 +50,7 @@ services:
 
 volumes:
   product-mysql-data:
+  app-logs:
 
 networks:
   microservices-net:
