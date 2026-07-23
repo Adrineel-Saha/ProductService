@@ -5,7 +5,7 @@ spring:
   application:
     name: ProductService
   config:
-    import: "configserver:"
+    import: "optional:configserver:"
   cloud:
     config:
       discovery:
